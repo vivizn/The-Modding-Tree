@@ -42,7 +42,9 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(1)
+	let gain = new Decimal(0)
+	if (hasUpgrade('f', 11)) {gain = gain.add(1)}
+	if (hasUpgrade('f', 12)) {gain = gain.times(upgradeEffect('f', 12))}
 	return gain
 }
 
