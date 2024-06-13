@@ -8,15 +8,16 @@ addLayer("m", {
             points: new Decimal(0),
         }
     },
-    color: "#A020F0",
-    requires: new Decimal(10), // Can be a function that takes requirement increases into account
+    color: "#de2d8b",
+    requires: new Decimal(5), // Can be a function that takes requirement increases into account
     resource: "magic points", // Name of prestige currency
-    baseResource: "friendships", // Name of resource prestige is based on
-    baseAmount() { return player.f.points }, // Get the current amount of baseResource
-    type: "none", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    baseResource: "loyalty", // Name of resource prestige is based on
+    baseAmount() { return player.l.points }, // Get the current amount of baseResource
+    type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 0.5, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
+        if (hasUpgrade('l', 12)) { mult = mult.times(upgradeEffect('l', 12)) }
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -28,6 +29,18 @@ addLayer("m", {
         { key: "h", description: "H: Reset for harmony points", onPress() { if (canReset(this.layer)) doReset(this.layer) } },
     ],
     layerShown() { return true },
+
+    canGenPoints() {
+        return true
+    },
+    getPointGen() {
+        if (!canGenPoints())
+            return new Decimal(0)
+
+        let gain = new Decimal(0)
+        if (hasUpgrade('l', 12)) { gain = gain.add(1) } //WIP need to generate passive income
+        return gain
+    },
 
     upgrades: {
         11: {

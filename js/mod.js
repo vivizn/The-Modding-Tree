@@ -3,7 +3,7 @@ let modInfo = {
 	id: "TTOH",
 	author: "vivizn",
 	pointsName: "friendships",
-	modFiles: ["tree.js", "layers/layerF.js", "layers/layerH.js", "layers/layerM.js"],
+	modFiles: ["tree.js", "layers/layerF.js", "layers/layerH.js", "layers/layerM.js", "layers/layerL.js"],
 
 	discordName: "",
 	discordLink: "",
@@ -45,6 +45,7 @@ function getPointGen() {
 	let gain = new Decimal(0)
 	if (hasUpgrade('f', 11)) {gain = gain.add(1)}
 	if (hasUpgrade('f', 12)) {gain = gain.times(upgradeEffect('f', 12))}
+	if (hasUpgrade('l', 11)) {gain = gain.times(upgradeEffect('l', 11))}
 	return gain
 }
 

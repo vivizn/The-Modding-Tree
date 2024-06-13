@@ -29,6 +29,18 @@ addLayer("f", {
     ],
     layerShown() { return true },
 
+    canGenPoints(){
+        if(hasUpgrade('l', 13)) { return true }
+    },
+    getPointGen() {
+        if(!canGenPoints())
+            return new Decimal(0)
+    
+        let gain = new Decimal(0)
+        if (hasUpgrade('l', 13)) {gain = addPoints(this.layer,tmp[this.layer].resetGain)} //WIP need to divide gain by 10 
+        return gain
+    },
+
     upgrades: {
         11: {
             title: "Say Hello",
